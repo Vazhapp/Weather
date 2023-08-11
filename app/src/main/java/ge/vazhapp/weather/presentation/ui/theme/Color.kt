@@ -1,4 +1,4 @@
-package ge.vazhapp.weather.ui.theme
+package ge.vazhapp.weather.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

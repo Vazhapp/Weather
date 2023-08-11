@@ -1,4 +1,4 @@
-package ge.vazhapp.weather
+package ge.vazhapp.weather.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ge.vazhapp.weather.ui.theme.WeatherTheme
+import ge.vazhapp.weather.presentation.ui.theme.WeatherTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
