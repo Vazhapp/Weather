@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
     kotlin("kapt")
 }
 
@@ -31,11 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "19"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -53,7 +55,6 @@ android {
 dependencies {
 
     val composeVersion = "1.4.3"
-    val ktorVersion = "2.2.3"
     val appcompatVersion = "1.5.1"
     val accompanistVersion = "0.25.1"
 
@@ -108,6 +109,7 @@ dependencies {
 
     // Jetpack Compose
     implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     // Tooling support (Previews, etc.)
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
@@ -140,18 +142,15 @@ dependencies {
     // Navigating with Compose
     implementation("com.google.accompanist:accompanist-navigation-animation:$accompanistVersion")
 
-
-    //Ktor
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.10.0")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("io.ktor:ktor-client-android:$ktorVersion")
-    implementation("io.ktor:ktor-utils-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
+    // Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    // Moshi
+    implementation ("com.squareup.moshi:moshi:1.14.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    kapt ("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
