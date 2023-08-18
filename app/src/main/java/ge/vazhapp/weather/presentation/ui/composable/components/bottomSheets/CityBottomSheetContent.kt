@@ -20,12 +20,12 @@ fun CityBottomSheet(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        Text(text = "Hello guys here im", fontSize = 30.sp)
-        Text(text = "Hello guys here im", fontSize = 30.sp)
-        Text(text = "Hello guys here im", fontSize = 30.sp)
-        Text(text = "Hello guys here im", fontSize = 30.sp)
-        Text(text = "Hello guys here im", fontSize = 30.sp)
-        Text(text = "Hello guys here im", fontSize = 30.sp)
-        Text(text = "Hello guys here im", fontSize = 30.sp)
+        Text(text = "Tbilisi", fontSize = 30.sp)
+        Text(text = "Batumi", fontSize = 30.sp)
+        Text(text = "Gori", fontSize = 30.sp)
+        Text(text = "Kutaisi", fontSize = 30.sp)
+        Text(text = "Tianeti", fontSize = 30.sp)
+        Text(text = "Senaki", fontSize = 30.sp)
+        Text(text = "Anaklia", fontSize = 30.sp)
     }
 }
