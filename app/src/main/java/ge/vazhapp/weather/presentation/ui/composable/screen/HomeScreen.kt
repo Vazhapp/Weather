@@ -25,13 +25,15 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     homeViewModel: HomeViewModel
 ) {
-    HomeScreen()
+    HomeScreen(homeViewModel = homeViewModel, gaga = "Gaga")
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel,
+    gaga: String,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
@@ -70,7 +72,9 @@ fun HomeScreen(
                 Modifier
                     .heightIn(min = screen30Percent.dp, max = screen60Percent.dp)
             ) {
-                CityBottomSheet()
+                CityBottomSheet(
+                    viewModel = homeViewModel
+                )
             }
         },
         sheetShape = RoundedCornerShape(14.dp, 14.dp),

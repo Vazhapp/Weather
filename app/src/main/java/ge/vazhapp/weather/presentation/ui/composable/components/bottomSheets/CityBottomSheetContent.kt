@@ -6,12 +6,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,25 +22,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ge.vazhapp.weather.R
 import ge.vazhapp.weather.common.Constants.FIRST_ELEMENT_INDEX
+import ge.vazhapp.weather.presentation.ui.composable.components.dragAndDropColumn.DragDropColumn
+import ge.vazhapp.weather.presentation.ui.composable.screen.HomeViewModel
 
 @Composable
 fun CityBottomSheet(
-    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel
 ) {
 
-    LazyColumn(
-        modifier = modifier
-            .padding(16.dp)
-    ) {
-        itemsIndexed(
-            listOf(
-                "Tbilisi",
-                "Batumi",
-                "Gori",
-            )
-        ) { index, item ->
-            CityCard(city = item, indexOfCity = index)
-        }
+    val uiState = viewModel.uiState.collectAsState()
+
+    DragDropColumn(
+        items = uiState.value,
+        onSwap = viewModel::swapSections
+    ) { item ->
+        val cityIndex = uiState.value.indexOf(item)
+        CityCard(city = item, indexOfCity = cityIndex)
     }
 }
 
@@ -61,7 +57,7 @@ fun CityCard(
             .padding(10.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        elevation = 6.dp,
+        elevation = 4.dp,
 
         ) {
         Row(
