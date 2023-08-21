@@ -25,15 +25,14 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     homeViewModel: HomeViewModel
 ) {
-    HomeScreen(homeViewModel = homeViewModel, gaga = "Gaga")
+    HomeScreen(modifier = Modifier,homeViewModel = homeViewModel)
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     homeViewModel: HomeViewModel,
-    gaga: String,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
