@@ -72,7 +72,10 @@ fun HomeScreen(
             }
         )
 
-        MainTemperature()
+        MainTemperature(
+            weatherTypeImageUrl = homeScreenUiState.weatherTypeImageUrl,
+            temperatureCelsius = homeScreenUiState.temperatureCelsius,
+        )
     }
 
     // We need ModalBottomSheetLayout, because only this BottomSheet can be closed when clicking

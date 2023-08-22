@@ -14,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -22,12 +21,12 @@ import coil.compose.AsyncImage
 import coil.imageLoader
 import ge.vazhapp.weather.R
 
-@Preview
 @Composable
 fun MainTemperature(
     modifier: Modifier = Modifier,
     // this url will be dynamic soon
-    weatherTypeImageUrl: String = "https://cdn.weatherapi.com/weather/64x64/day/113.png",
+    weatherTypeImageUrl: String,
+    temperatureCelsius: String,
     @DrawableRes placeHolder: Int = R.drawable.ic_placeholder,
     @DrawableRes error: Int = R.drawable.ic_placeholder,
     @DrawableRes fallback: Int = R.drawable.ic_placeholder,
@@ -47,7 +46,7 @@ fun MainTemperature(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "0.0",
+                    text = temperatureCelsius,
                     fontFamily = FontFamily(listOf(Font(R.font.main_font))),
                     color = Color.White,
                     fontSize = 110.sp
