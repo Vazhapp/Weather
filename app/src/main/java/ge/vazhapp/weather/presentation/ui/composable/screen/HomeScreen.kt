@@ -11,21 +11,33 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ge.vazhapp.weather.presentation.ui.composable.components.HomeScreenTopBar
+import ge.vazhapp.weather.presentation.ui.composable.components.MainTemperature
 import ge.vazhapp.weather.presentation.ui.composable.components.bottomSheets.CityBottomSheet
 import ge.vazhapp.weather.presentation.ui.theme.LightBlue
+import ge.vazhapp.weather.presentation.ui.util.connectToLoading
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel
 ) {
-    HomeScreen(modifier = Modifier,homeViewModel = homeViewModel)
+    homeViewModel.connectToLoading()
+
+    val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+
+    HomeScreen(
+        modifier = Modifier,
+        homeViewModel = homeViewModel,
+        homeScreenUiState = uiState,
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -33,6 +45,7 @@ fun HomeScreen(
 fun HomeScreen(
     modifier: Modifier,
     homeViewModel: HomeViewModel,
+    homeScreenUiState: HomeScreenUiState,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
@@ -47,7 +60,6 @@ fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = LightBlue),
-
         ) {
         HomeScreenTopBar(
             onLocationChangeClick = {
@@ -58,6 +70,11 @@ fun HomeScreen(
             onSettingsClick = {
                 // TODO impl settings click
             }
+        )
+
+        MainTemperature(
+            weatherTypeImageUrl = homeScreenUiState.weatherTypeImageUrl,
+            temperatureCelsius = homeScreenUiState.temperatureCelsius,
         )
     }
 
