@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "ge.vazhapp.weather"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ge.vazhapp.weather"
@@ -110,6 +110,7 @@ dependencies {
     // Jetpack Compose
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha12")
     // Tooling support (Previews, etc.)
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
