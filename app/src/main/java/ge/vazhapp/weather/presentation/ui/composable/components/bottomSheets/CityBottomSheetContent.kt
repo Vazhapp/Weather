@@ -24,19 +24,20 @@ import ge.vazhapp.weather.R
 import ge.vazhapp.weather.common.Constants.FIRST_ELEMENT_INDEX
 import ge.vazhapp.weather.presentation.ui.composable.components.dragAndDropColumn.DragDropColumn
 import ge.vazhapp.weather.presentation.ui.composable.screen.HomeViewModel
+import ge.vazhapp.weather.presentation.ui.util.connectToLoading
 
 @Composable
 fun CityBottomSheet(
     viewModel: HomeViewModel
 ) {
-
+    viewModel.connectToLoading()
     val uiState = viewModel.uiState.collectAsState()
 
     DragDropColumn(
-        items = uiState.value,
+        items = uiState.value.cities,
         onSwap = viewModel::swapSections
     ) { item ->
-        val cityIndex = uiState.value.indexOf(item)
+        val cityIndex = uiState.value.cities.indexOf(item)
         CityCard(city = item, indexOfCity = cityIndex)
     }
 }
