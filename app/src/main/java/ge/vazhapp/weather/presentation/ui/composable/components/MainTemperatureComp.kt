@@ -24,7 +24,6 @@ import ge.vazhapp.weather.R
 @Composable
 fun MainTemperature(
     modifier: Modifier = Modifier,
-    // this url will be dynamic soon
     weatherTypeImageUrl: String,
     temperatureCelsius: String,
     @DrawableRes placeHolder: Int = R.drawable.ic_placeholder,
