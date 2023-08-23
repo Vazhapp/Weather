@@ -31,6 +31,7 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 @Composable
 fun HomeScreenTopBar(
     modifier: Modifier = Modifier,
+    lastFetchedCity: String,
     onLocationChangeClick: () -> Unit,
     onSettingsClick: () -> Unit,
 ) {
@@ -51,7 +52,7 @@ fun HomeScreenTopBar(
                         }
                 ) {
                     Text(
-                        text = "Tbilisi",
+                        text = lastFetchedCity,
                         color = Color.White,
                         fontSize = 38.sp,
                         fontFamily = FontFamily(fonts = listOf(Font(R.font.main_font)))

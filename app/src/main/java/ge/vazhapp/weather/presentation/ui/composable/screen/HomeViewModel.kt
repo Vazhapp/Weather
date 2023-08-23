@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class HomeScreenUiState(
+    val lastFetchedCity: String = "",
     val cities: List<String> = emptyList(),
     val temperatureCelsius: String = "0.0",
     val weatherTypeImageUrl: String = ""
@@ -62,6 +63,7 @@ class HomeViewModel @Inject constructor(
                     with(result.data) {
                         _uiState.update {
                             it.copy(
+                                lastFetchedCity = location?.name.orEmpty(),
                                 temperatureCelsius = current.tempC.toString(),
                                 weatherTypeImageUrl = current.condition?.icon?.startUrlWithHttps()
                                     ?: ""
@@ -107,9 +109,13 @@ class HomeViewModel @Inject constructor(
                     is NetworkResult.Success -> {
                         hideLoading()
                         _uiState.update {
-                            it.copy(
-                                temperatureCelsius = result.data.current.tempC.toString()
-                            )
+                            with(result.data) {
+                                it.copy(
+                                    lastFetchedCity = location?.name.orEmpty(),
+                                    temperatureCelsius = current.tempC.toString()
+                                )
+                            }
+
                         }
                     }
                 }

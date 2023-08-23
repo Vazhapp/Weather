@@ -3,7 +3,6 @@ package ge.vazhapp.weather.presentation.ui.composable.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -36,7 +35,8 @@ fun HomeScreen(
         modifier = Modifier,
         homeScreenUiState = uiState,
         cities = uiState.cities,
-        swapActions = homeViewModel::swapSections
+        swapActions = homeViewModel::swapSections,
+        lastFetchedCity = uiState.lastFetchedCity
     )
 }
 
@@ -47,6 +47,7 @@ fun HomeScreen(
     homeScreenUiState: HomeScreenUiState,
     cities: List<String>,
     swapActions: (from: Int, to: Int) -> Unit,
+    lastFetchedCity: String,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
@@ -80,6 +81,7 @@ fun HomeScreen(
                 .background(color = LightBlue),
         ) {
             HomeScreenTopBar(
+                lastFetchedCity = lastFetchedCity,
                 onLocationChangeClick = {
                     scope.launch {
                         modalBottomSheetState.show()
