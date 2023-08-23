@@ -29,7 +29,7 @@ import ge.vazhapp.weather.presentation.ui.util.connectToLoading
 @Composable
 fun CityBottomSheet(
     cities: List<String>,
-    swapSections: (from: Int, to: Int) -> Unit
+    swapSections: (from: Int, to: Int) -> Unit,
 ) {
     DragDropColumn(
         items = cities,

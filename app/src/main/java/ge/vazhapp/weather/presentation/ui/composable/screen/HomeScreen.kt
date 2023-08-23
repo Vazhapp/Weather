@@ -30,7 +30,6 @@ fun HomeScreen(
     homeViewModel: HomeViewModel
 ) {
     homeViewModel.connectToLoading()
-
     val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
 
     HomeScreen(
@@ -78,7 +77,6 @@ fun HomeScreen(
     ) {
         Box(
             modifier = modifier
-                .fillMaxSize()
                 .background(color = LightBlue),
         ) {
             HomeScreenTopBar(
