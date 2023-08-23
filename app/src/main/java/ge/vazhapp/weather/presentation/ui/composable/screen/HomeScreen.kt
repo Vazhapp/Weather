@@ -35,8 +35,9 @@ fun HomeScreen(
 
     HomeScreen(
         modifier = Modifier,
-        homeViewModel = homeViewModel,
         homeScreenUiState = uiState,
+        cities = uiState.cities,
+        swapActions = homeViewModel::swapSections
     )
 }
 
@@ -44,8 +45,9 @@ fun HomeScreen(
 @Composable
 fun HomeScreen(
     modifier: Modifier,
-    homeViewModel: HomeViewModel,
     homeScreenUiState: HomeScreenUiState,
+    cities: List<String>,
+    swapActions: (from: Int, to: Int) -> Unit,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
@@ -55,28 +57,6 @@ fun HomeScreen(
     val configuration = LocalConfiguration.current
     val screen60Percent = configuration.screenHeightDp * 0.6
     val screen30Percent = configuration.screenHeightDp * 0.3
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = LightBlue),
-        ) {
-        HomeScreenTopBar(
-            onLocationChangeClick = {
-                scope.launch {
-                    modalBottomSheetState.show()
-                }
-            },
-            onSettingsClick = {
-                // TODO impl settings click
-            }
-        )
-
-        MainTemperature(
-            weatherTypeImageUrl = homeScreenUiState.weatherTypeImageUrl,
-            temperatureCelsius = homeScreenUiState.temperatureCelsius,
-        )
-    }
 
     // We need ModalBottomSheetLayout, because only this BottomSheet can be closed when clicking
     // outside of bottomSheet
@@ -89,11 +69,33 @@ fun HomeScreen(
                     .heightIn(min = screen30Percent.dp, max = screen60Percent.dp)
             ) {
                 CityBottomSheet(
-                    viewModel = homeViewModel
+                    cities = cities,
+                    swapSections = swapActions
                 )
             }
         },
         sheetShape = RoundedCornerShape(14.dp, 14.dp),
-        content = {},
-    )
+    ) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = LightBlue),
+        ) {
+            HomeScreenTopBar(
+                onLocationChangeClick = {
+                    scope.launch {
+                        modalBottomSheetState.show()
+                    }
+                },
+                onSettingsClick = {
+                    // TODO impl settings click
+                }
+            )
+
+            MainTemperature(
+                weatherTypeImageUrl = homeScreenUiState.weatherTypeImageUrl,
+                temperatureCelsius = homeScreenUiState.temperatureCelsius,
+            )
+        }
+    }
 }

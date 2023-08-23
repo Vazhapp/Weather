@@ -28,16 +28,14 @@ import ge.vazhapp.weather.presentation.ui.util.connectToLoading
 
 @Composable
 fun CityBottomSheet(
-    viewModel: HomeViewModel
+    cities: List<String>,
+    swapSections: (from: Int, to: Int) -> Unit
 ) {
-    viewModel.connectToLoading()
-    val uiState = viewModel.uiState.collectAsState()
-
     DragDropColumn(
-        items = uiState.value.cities,
-        onSwap = viewModel::swapSections
+        items = cities,
+        onSwap = swapSections
     ) { item ->
-        val cityIndex = uiState.value.cities.indexOf(item)
+        val cityIndex = cities.indexOf(item)
         CityCard(city = item, indexOfCity = cityIndex)
     }
 }
