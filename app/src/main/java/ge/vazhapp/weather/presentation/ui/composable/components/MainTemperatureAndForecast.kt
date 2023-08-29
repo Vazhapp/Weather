@@ -58,7 +58,7 @@ fun MainTemperatureAndForecast(
             modifier = modifier
                 .fillMaxWidth()
                 .constrainAs(weatherTypeIcon) {
-                    top.linkTo(temperature.top, margin = 24.dp)
+                    top.linkTo(temperature.top, margin = 44.dp)
                     start.linkTo(temperature.end)
                     end.linkTo(temperature.end)
                 },
@@ -66,7 +66,7 @@ fun MainTemperatureAndForecast(
         ) {
             AsyncImage(
                 modifier = modifier
-                    .size(160.dp),
+                    .size(120.dp),
                 model = weatherTypeImageUrl,
                 imageLoader = LocalContext.current.imageLoader,
                 placeholder = painterResource(placeHolder),
@@ -80,7 +80,7 @@ fun MainTemperatureAndForecast(
             modifier = modifier
                 .padding(20.dp)
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(180.dp)
                 .constrainAs(weatherForecast) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)

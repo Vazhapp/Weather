@@ -1,13 +1,12 @@
-package ge.vazhapp.weather.presentation.ui.composable.components
+package ge.vazhapp.weather.presentation.ui.composable.components.forecast
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +24,7 @@ fun ThreeDaysForecastWindow(
 ) {
     val stroke = Stroke(
         width = 2f,
-        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
+        pathEffect = PathEffect.dashPathEffect(floatArrayOf(30f, 20f), 0f)
     )
 
     Box(
@@ -33,10 +32,15 @@ fun ThreeDaysForecastWindow(
             .height(200.dp)
             .fillMaxWidth()
             .drawBehind {
-                drawRoundRect(color = Color.Black, style = stroke)
-            },
-        contentAlignment = Alignment.BottomCenter
+                drawRoundRect(color = Color.White, style = stroke)
+            }
+            .background(Color.White.copy(alpha = 0.25f)),
+        contentAlignment = Alignment.BottomCenter,
     ) {
-        Text(text = "Haaaaiii")
+        LazyRow(modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            items(3) {
+                EachDayCard(weatherTypeImageUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png")
+            }
+        }
     }
 }
