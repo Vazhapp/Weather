@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.imageLoader
 import ge.vazhapp.weather.R
+import ge.vazhapp.weather.common.util.DateFormats
 
 @Composable
 fun EachDayCard(
@@ -42,14 +43,15 @@ fun EachDayCard(
     ) {
         Column(
             modifier = modifier
-                .wrapContentWidth(),
+                .wrapContentWidth()
+                .padding(6.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 modifier = modifier
                     .wrapContentWidth(),
-                text = "Date",
+                text = "${DateFormats.day} ${DateFormats.month}",
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center
             )
