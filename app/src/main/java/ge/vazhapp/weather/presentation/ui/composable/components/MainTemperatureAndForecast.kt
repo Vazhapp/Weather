@@ -28,7 +28,7 @@ fun MainTemperatureAndForecast(
     modifier: Modifier = Modifier,
     weatherTypeImageUrl: String,
     temperatureCelsius: String,
-    threeDaysForecast: @Composable() () -> Unit,
+    threeDaysForecast: @Composable () -> Unit,
     @DrawableRes placeHolder: Int = R.drawable.ic_placeholder,
     @DrawableRes error: Int = R.drawable.ic_placeholder,
     @DrawableRes fallback: Int = R.drawable.ic_placeholder,
