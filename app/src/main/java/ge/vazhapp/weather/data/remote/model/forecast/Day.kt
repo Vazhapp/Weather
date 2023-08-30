@@ -2,6 +2,7 @@ package ge.vazhapp.weather.data.remote.model.forecast
 
 
 import com.squareup.moshi.Json
+import ge.vazhapp.weather.data.remote.model.Condition
 
 data class Day(
     @Json(name = "avghumidity")
