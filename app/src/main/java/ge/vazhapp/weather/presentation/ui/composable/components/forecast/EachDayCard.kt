@@ -36,6 +36,7 @@ fun EachDayCard(
     modifier: Modifier = Modifier,
     weatherTypeImageUrl: String,
     epoch: String,
+    temperatureCelsius: String,
     @DrawableRes placeHolder: Int = R.drawable.ic_placeholder,
     @DrawableRes error: Int = R.drawable.ic_placeholder,
     @DrawableRes fallback: Int = R.drawable.ic_placeholder,
@@ -74,7 +75,7 @@ fun EachDayCard(
                 Text(
                     modifier = modifier
                         .wrapContentWidth(),
-                    text =  "${epoch.getMonthDay()} ${epoch.getShortlyMonth()}",//"${DateExtensions.day} ${DateExtensions.month}",
+                    text =  "${epoch.getMonthDay()} ${epoch.getShortlyMonth()}",
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center
                 )
@@ -92,7 +93,9 @@ fun EachDayCard(
 
                 Text(
                     modifier = modifier
-                        .wrapContentWidth(), text = "20.3", fontSize = 20.sp
+                        .wrapContentWidth(),
+                    text = temperatureCelsius,
+                    fontSize = 20.sp,
                 )
             }
         }

@@ -20,10 +20,8 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
 @Composable
 fun ThreeDaysForecastWindow(
     modifier: Modifier = Modifier
@@ -64,7 +62,8 @@ fun ThreeDaysForecastWindow(
                 items(3) {
                     EachDayCard(
                         weatherTypeImageUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
-                        epoch = "1693400895"
+                        epoch = "1693400895",
+                        temperatureCelsius = "20.3"
                     )
                 }
             }
