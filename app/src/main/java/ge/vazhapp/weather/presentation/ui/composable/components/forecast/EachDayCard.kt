@@ -28,12 +28,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.imageLoader
 import ge.vazhapp.weather.R
-import ge.vazhapp.weather.common.util.DateFormats
+import ge.vazhapp.weather.common.getMonthDay
+import ge.vazhapp.weather.common.getShortlyMonth
 
 @Composable
 fun EachDayCard(
     modifier: Modifier = Modifier,
     weatherTypeImageUrl: String,
+    epoch: String,
     @DrawableRes placeHolder: Int = R.drawable.ic_placeholder,
     @DrawableRes error: Int = R.drawable.ic_placeholder,
     @DrawableRes fallback: Int = R.drawable.ic_placeholder,
@@ -72,7 +74,7 @@ fun EachDayCard(
                 Text(
                     modifier = modifier
                         .wrapContentWidth(),
-                    text = "${DateFormats.day} ${DateFormats.month}",
+                    text =  "${epoch.getMonthDay()} ${epoch.getShortlyMonth()}",//"${DateExtensions.day} ${DateExtensions.month}",
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center
                 )

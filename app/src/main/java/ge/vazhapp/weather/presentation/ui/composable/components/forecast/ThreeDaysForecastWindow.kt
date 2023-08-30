@@ -62,7 +62,10 @@ fun ThreeDaysForecastWindow(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 items(3) {
-                    EachDayCard(weatherTypeImageUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png")
+                    EachDayCard(
+                        weatherTypeImageUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                        epoch = "1693400895"
+                    )
                 }
             }
         }
