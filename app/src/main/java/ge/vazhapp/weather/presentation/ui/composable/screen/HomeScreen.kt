@@ -18,7 +18,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ge.vazhapp.weather.presentation.ui.composable.components.HomeScreenTopBar
-import ge.vazhapp.weather.presentation.ui.composable.components.MainTemperature
+import ge.vazhapp.weather.presentation.ui.composable.components.MainTemperatureAndForecast
+import ge.vazhapp.weather.presentation.ui.composable.components.forecast.ThreeDaysForecastWindow
 import ge.vazhapp.weather.presentation.ui.composable.components.bottomSheets.CityBottomSheet
 import ge.vazhapp.weather.presentation.ui.theme.LightBlue
 import ge.vazhapp.weather.presentation.ui.util.connectToLoading
@@ -92,9 +93,12 @@ fun HomeScreen(
                 }
             )
 
-            MainTemperature(
+            MainTemperatureAndForecast(
                 weatherTypeImageUrl = homeScreenUiState.weatherTypeImageUrl,
                 temperatureCelsius = homeScreenUiState.temperatureCelsius,
+                threeDaysForecast = {
+                    ThreeDaysForecastWindow()
+                }
             )
         }
     }
