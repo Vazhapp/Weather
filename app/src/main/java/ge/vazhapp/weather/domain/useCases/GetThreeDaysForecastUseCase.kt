@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetThreeDaysForecastUseCase @Inject constructor(
     private val weatherForecastRepository: WeatherForecastRepository
 ) {
-    suspend fun getThreeDaysForecast(city: String): NetworkResult<Forecast> =
+    suspend operator fun invoke(city: String): NetworkResult<Forecast> =
         weatherForecastRepository.getThreeDaysForecast(city = city)
 }

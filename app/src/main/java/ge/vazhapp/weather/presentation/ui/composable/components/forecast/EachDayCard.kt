@@ -35,7 +35,7 @@ import ge.vazhapp.weather.common.getShortlyMonth
 fun EachDayCard(
     modifier: Modifier = Modifier,
     weatherTypeImageUrl: String,
-    epoch: String,
+    epoch: Long,
     temperatureCelsius: String,
     @DrawableRes placeHolder: Int = R.drawable.ic_placeholder,
     @DrawableRes error: Int = R.drawable.ic_placeholder,

@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ge.vazhapp.weather.data.remote.core.Constants
 import ge.vazhapp.weather.data.remote.network.services.CurrentWeatherService
+import ge.vazhapp.weather.data.remote.network.services.WeatherForecastService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -51,4 +52,9 @@ object NetworkModule {
     @Singleton
     fun provideCurrentWeatherService(retrofit: Retrofit): CurrentWeatherService =
         retrofit.create(CurrentWeatherService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideWeatherForecastService(retrofit: Retrofit): WeatherForecastService =
+        retrofit.create(WeatherForecastService::class.java)
 }

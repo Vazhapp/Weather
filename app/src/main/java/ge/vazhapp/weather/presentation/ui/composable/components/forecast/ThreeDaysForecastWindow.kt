@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,10 +22,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import ge.vazhapp.weather.common.startUrlWithHttps
+import ge.vazhapp.weather.data.remote.model.forecast.Forecastday
 
 @Composable
 fun ThreeDaysForecastWindow(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    threeDaysForecast: List<Forecastday>,
 ) {
     val stroke = Stroke(
         width = 2f,
@@ -59,11 +63,11 @@ fun ThreeDaysForecastWindow(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                items(3) {
+                items(threeDaysForecast) { item ->
                     EachDayCard(
-                        weatherTypeImageUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
-                        epoch = "1693400895",
-                        temperatureCelsius = "20.3"
+                        weatherTypeImageUrl = item.day?.condition?.icon?.startUrlWithHttps().orEmpty(),
+                        epoch = item.dateEpoch?.toLong() ?: 0,
+                        temperatureCelsius = item.day?.maxtempC.toString()
                     )
                 }
             }
