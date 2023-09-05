@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ge.vazhapp.weather.data.remote.model.forecast.Forecastday
 import ge.vazhapp.weather.presentation.ui.composable.components.HomeScreenTopBar
 import ge.vazhapp.weather.presentation.ui.composable.components.MainTemperatureAndForecast
 import ge.vazhapp.weather.presentation.ui.composable.components.forecast.ThreeDaysForecastWindow
@@ -37,7 +38,8 @@ fun HomeScreen(
         homeScreenUiState = uiState,
         cities = uiState.cities,
         swapActions = homeViewModel::swapSections,
-        lastFetchedCity = uiState.lastFetchedCity
+        lastFetchedCity = uiState.lastFetchedCity,
+        threeDaysForecast = uiState.threeDaysForecast,
     )
 }
 
@@ -49,6 +51,7 @@ fun HomeScreen(
     cities: List<String>,
     swapActions: (from: Int, to: Int) -> Unit,
     lastFetchedCity: String,
+    threeDaysForecast: List<Forecastday>,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true
@@ -97,7 +100,9 @@ fun HomeScreen(
                 weatherTypeImageUrl = homeScreenUiState.weatherTypeImageUrl,
                 temperatureCelsius = homeScreenUiState.temperatureCelsius,
                 threeDaysForecast = {
-                    ThreeDaysForecastWindow()
+                    ThreeDaysForecastWindow(
+                        threeDaysForecast = threeDaysForecast
+                    )
                 }
             )
         }

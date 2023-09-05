@@ -10,23 +10,29 @@ import ge.vazhapp.weather.common.startUrlWithHttps
 import ge.vazhapp.weather.common.util.loading.LoadingStateHolder
 import ge.vazhapp.weather.common.util.loading.defaultLoadingStateHolder
 import ge.vazhapp.weather.data.remote.core.NetworkResult
+import ge.vazhapp.weather.data.remote.model.forecast.Forecastday
 import ge.vazhapp.weather.domain.useCases.GetCurrentWeatherUseCase
+import ge.vazhapp.weather.domain.useCases.GetThreeDaysForecastUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 data class HomeScreenUiState(
     val lastFetchedCity: String = "",
     val cities: List<String> = emptyList(),
     val temperatureCelsius: String = "0.0",
-    val weatherTypeImageUrl: String = ""
+    val weatherTypeImageUrl: String = "",
+    val threeDaysForecast: List<Forecastday> = emptyList()
 )
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase
+    private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
+    private val getThreeDaysForecastUseCase: GetThreeDaysForecastUseCase,
 ) : ViewModel(),
     LoadingStateHolder by defaultLoadingStateHolder() {
     private val sections = listOf(
@@ -40,6 +46,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         getDefaultCityWeather()
+        getThreeDaysWeatherForecast()
     }
 
     private fun getDefaultCityWeather() {
@@ -92,6 +99,23 @@ class HomeViewModel @Inject constructor(
         if (fromItem == newList[FIRST_ELEMENT_INDEX] || newList[FIRST_ELEMENT_INDEX] == toItem) {
             showLoading()
             viewModelScope.launch {
+
+                val threeDaysWeatherForecast = async(Dispatchers.IO) {
+                    when (val result = getThreeDaysForecastUseCase(newList[FIRST_ELEMENT_INDEX])) {
+                        is NetworkResult.Error -> {
+                            d("MyError", "${result.message}")
+                            return@async emptyList()
+                        }
+
+                        is NetworkResult.Exception -> {
+                            d("MyError", "${result.e}")
+                            return@async emptyList()
+                        }
+
+                        is NetworkResult.Success -> return@async result.data.forecast!!.forecastday
+                    }
+                }
+
                 when (val result = getCurrentWeatherUseCase(newList[FIRST_ELEMENT_INDEX])) {
                     is NetworkResult.Error -> {
                         hideLoading()
@@ -112,12 +136,39 @@ class HomeViewModel @Inject constructor(
                             with(result.data) {
                                 it.copy(
                                     lastFetchedCity = location?.name.orEmpty(),
-                                    temperatureCelsius = current.tempC.toString()
+                                    temperatureCelsius = current.tempC.toString(),
+                                    threeDaysForecast = threeDaysWeatherForecast.await()
+                                        ?: emptyList()
                                 )
                             }
-
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private fun getThreeDaysWeatherForecast() {
+        viewModelScope.launch {
+            showLoading()
+            when (val result = getThreeDaysForecastUseCase(DEFAULT_CITY_TBILISI)) {
+                is NetworkResult.Error -> {
+                    d("MyError", "${result.message}")
+                    hideLoading()
+                }
+
+                is NetworkResult.Exception -> {
+                    d("MyError", "${result.e}")
+                    hideLoading()
+                }
+
+                is NetworkResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            threeDaysForecast = result.data.forecast?.forecastday ?: emptyList()
+                        )
+                    }
+                    hideLoading()
                 }
             }
         }
