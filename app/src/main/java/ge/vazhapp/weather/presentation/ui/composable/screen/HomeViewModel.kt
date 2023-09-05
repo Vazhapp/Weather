@@ -147,7 +147,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
+// add some code for just push and see if trigger is working CI/CD BITRISE
     private fun getThreeDaysWeatherForecast() {
         viewModelScope.launch {
             showLoading()
